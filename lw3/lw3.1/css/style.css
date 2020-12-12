@@ -141,7 +141,7 @@ a {
   display: flex;
   justify-content: center;
 }
-.features__container div {
+.features__item {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -172,7 +172,7 @@ a {
   display: flex;
   justify-content: center;
 }
-.plan-selection div {
+.plan-selection__element {
   position: relative;
   margin-left: 50px;
   display: flex;
@@ -206,7 +206,7 @@ a {
   color: #FFFFFF;
   box-shadow: 0px 21px 25px -10px rgba(245, 56, 56, 0.35);
 }
-.plan-selection div:hover {
+.plan-selection__element:hover {
   border-color:  #F53838;
 }
 .plan-selection__price{
@@ -220,7 +220,7 @@ a {
   font-size: 25px;
   line-height: 30px;
 }
-.plan-selection ul {
+.plan-selection__features  {
   font-family: Rubik-Light;
   font-style: normal;
   font-weight: normal;
@@ -230,7 +230,7 @@ a {
   list-style-position: puside;
   list-style-image:url("../images/check .png");
 }
-.plan-selection li {
+.plan-selection__features_item {
   padding-bottom: 10px;
 }
 footer {
