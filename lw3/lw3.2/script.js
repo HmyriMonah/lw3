@@ -45,46 +45,28 @@ window.onload = function () {
       storeElements = storeElements.reverse();
     }
   }
-  function remove() {
-    if (document.querySelector(".store-select option:checked") !== null) {
-      var selectedOption = document.querySelector(
-        ".store-select option:checked"
-      );
-      storeElements.splice(storeElements.indexOf(selectedOption.innerText), 1);
+  function remove(element, tableName) {
+    var elementPosition = storeElements.indexOf(element);
+    if (elementPosition !== -1 && tableName == "store") {
+      storeElements.splice(elementPosition, 1);
     } else {
-      var selectedOption = document.querySelector(
-        ".listing-select option:checked"
-      );
-      listingElements.splice(
-        listingElements.indexOf(selectedOption.innerText),
-        1
-      );
+      var elementPosition = listingElements.indexOf(element);
+      if (elementPosition !== -1 && tableName == "listing") {
+        listingElements.splice(elementPosition, 1);
+      }
     }
   }
-  function rename(name) {
-    if (document.querySelector(".store-select option:checked") !== null) {
-      var selectedOption = document.querySelector(
-        ".store-select option:checked"
-      );
-      storeElements.splice(
-        storeElements.indexOf(selectedOption.innerText),
-        1,
-        name
-      );
-    } else {
-      var selectedOption = document.querySelector(
-        ".listing-select option:checked"
-      );
-      listingElements.splice(
-        listingElements.indexOf(selectedOption.innerText),
-        1,
-        name
-      );
+  function rename(element, elementName, tableName) {
+    if (tableName === "store") {
+      storeElements.splice(element, 1, elementName);
+    }else if(tableName === "listing")
+    {
+      listingElements.splice(element, 1, elementName);
     }
   }
   // регистрируем события
   var addButton = document.querySelector("#add-button");
-  var AddToListingButton = document.querySelector("#add-listing-button");
+  var addToListingButton = document.querySelector("#add-listing-button");
   var deleteButton = document.querySelector("#delete-button");
   var newElementButton = document.querySelector("#new-element-button");
   var sortButton = document.querySelector("#sort-button");
@@ -96,13 +78,23 @@ window.onload = function () {
     addToStoreElements(selectedOption.innerText);
     updateUI();
   };
-  AddToListingButton.onclick = function () {
+  addToListingButton.onclick = function () {
     var selectedOption = document.querySelector(".store-select option:checked");
     addToListingElements(selectedOption.innerText);
     updateUI();
   };
   deleteButton.onclick = function () {
-    remove();
+    if (document.querySelector(".store-select option:checked") !== null) {
+      var selectedOption = document.querySelector(
+        ".store-select option:checked"
+      );
+      remove(selectedOption.innerText, "store");
+    } else {
+      var selectedOption = document.querySelector(
+        ".listing-select option:checked"
+      );
+      remove(selectedOption.innerText, "listing");
+    }
     updateUI();
   };
   newElementButton.onclick = function () {
@@ -116,6 +108,17 @@ window.onload = function () {
   };
   renameButton.onclick = function () {
     var newName = prompt("Enter new name");
+    if (document.querySelector(".store-select option:checked") !== null) {
+      var selectedOption = document.querySelector(
+        ".store-select option:checked"
+      );
+      rename(selectedOption.innerText,newName,"store");
+    } else {
+      var selectedOption = document.querySelector(
+        ".listing-select option:checked"
+      );
+      rename(selectedOption.innerText,newName,"listing");
+    }
     rename(newName);
     updateUI();
   };
