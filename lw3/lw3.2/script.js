@@ -45,23 +45,18 @@ window.onload = function () {
       storeElements = storeElements.reverse();
     }
   }
-  function remove(element, tableName) {
-    var elementPosition = storeElements.indexOf(element);
-    if (elementPosition !== -1 && tableName == "store") {
-      storeElements.splice(elementPosition, 1);
-    } else {
-      var elementPosition = listingElements.indexOf(element);
-      if (elementPosition !== -1 && tableName == "listing") {
-        listingElements.splice(elementPosition, 1);
-      }
+  function remove(element, array) {
+    var elementPosition = array.indexOf(element);
+    if (elementPosition !== -1) {
+      var list = array.splice(elementPosition, 1);
+      return list;
     }
   }
-  function rename(element, elementName, tableName) {
-    if (tableName === "store") {
-      storeElements.splice(element, 1, elementName);
-    }else if(tableName === "listing")
-    {
-      listingElements.splice(element, 1, elementName);
+  function rename(oldName, array, newName) {
+    var elementPosition = array.indexOf(oldName);
+    if (elementPosition !== -1) {
+      var list = array.splice(elementPosition, 1, newName);
+      return list;
     }
   }
   // регистрируем события
@@ -88,12 +83,12 @@ window.onload = function () {
       var selectedOption = document.querySelector(
         ".store-select option:checked"
       );
-      remove(selectedOption.innerText, "store");
+      remove(selectedOption.innerText, storeElements);
     } else {
       var selectedOption = document.querySelector(
         ".listing-select option:checked"
       );
-      remove(selectedOption.innerText, "listing");
+      remove(selectedOption.innerText, listingElements);
     }
     updateUI();
   };
@@ -107,19 +102,18 @@ window.onload = function () {
     updateUI();
   };
   renameButton.onclick = function () {
-    var newName = prompt("Enter new name");
+    let newName = prompt("Enter new name");
     if (document.querySelector(".store-select option:checked") !== null) {
       var selectedOption = document.querySelector(
         ".store-select option:checked"
       );
-      rename(selectedOption.innerText,newName,"store");
+      rename(selectedOption.innerText, storeElements, newName);
     } else {
       var selectedOption = document.querySelector(
         ".listing-select option:checked"
       );
-      rename(selectedOption.innerText,newName,"listing");
+      rename(selectedOption.innerText, listingElements, newName);
     }
-    rename(newName);
     updateUI();
   };
 };
